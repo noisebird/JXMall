@@ -44,5 +44,17 @@ public class ProductController {
 
 
 
+//    根据id查找商品
+    @GetMapping(value="{id}")
+    public  ResponseEntity<?> getProductById(@PathVariable int id){
+        Product result=productService.findProductById(id);
+        if(productService.findProductById(id)==null){
+            return new ResponseEntity<String>("id is not exist!",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Product>(result, HttpStatus.OK);
+    }
+
+
+
 
 }

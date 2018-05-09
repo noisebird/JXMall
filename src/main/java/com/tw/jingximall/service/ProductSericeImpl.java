@@ -21,5 +21,9 @@ public class ProductSericeImpl {
         return productRepository.saveAndFlush(product);
     }
 
+    public Product findProductById(int id){
+        return productRepository.findProductById(id);
+    }
+
 
 }
