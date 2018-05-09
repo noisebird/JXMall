@@ -18,11 +18,13 @@ public class Product {
     @Column
     private  String description;
 
-    @OneToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="inventoryId")
+    @OneToOne(fetch=FetchType.EAGER,cascade={CascadeType.ALL},mappedBy = "product")
     private  Inventory inventory;
 
-    public Product( String name, String description,double price) {
+    public Product() {
+    }
+
+    public Product(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price=price;

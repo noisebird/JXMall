@@ -16,6 +16,10 @@ public class Inventory {
     @Column
     private int lockedCount=0;
 
+    @OneToOne(targetEntity = Product.class)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private Product product;
+
     public Inventory() {
     }
 
