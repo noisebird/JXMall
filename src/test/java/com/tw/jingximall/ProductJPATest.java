@@ -51,4 +51,10 @@ public class ProductJPATest {
 
     }
 
+    @Test
+    public void should_find_prduct_by_id_will_return_true() throws Exception {
+        assertTrue(productRepository.findProductById(1).getName().equals("test666"));
+    }
+
+
 }
