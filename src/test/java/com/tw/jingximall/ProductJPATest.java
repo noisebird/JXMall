@@ -56,5 +56,11 @@ public class ProductJPATest {
         assertTrue(productRepository.findProductById(1).getName().equals("test666"));
     }
 
+    @Test
+    public void should_update_product_will_reutrn_true() throws Exception {
+        assertTrue(productRepository.updateProduct("test666","test",1000,1)==1);
+        assertTrue(productRepository.findProductById(1).getPrice()==1000);
+    }
+
 
 }

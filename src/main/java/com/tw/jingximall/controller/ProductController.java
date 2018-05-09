@@ -43,6 +43,17 @@ public class ProductController {
     }
 
 
+//  更新商品
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable int id,@RequestBody Product product){
+        if(productService.findProductById(id)==null){
+            return new ResponseEntity<String>("id is not exist!",HttpStatus.NOT_FOUND);
+        }
+        if(productService.modifyProductInfo(product,id)==0){
+            return new ResponseEntity<String>("update product failure", HttpStatus.NOT_MODIFIED);
+        }
+        return new ResponseEntity<Product>( HttpStatus.NO_CONTENT);
+    }
 
 //    根据id查找商品
     @GetMapping(value="{id}")

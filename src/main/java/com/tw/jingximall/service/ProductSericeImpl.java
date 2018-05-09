@@ -25,5 +25,9 @@ public class ProductSericeImpl {
         return productRepository.findProductById(id);
     }
 
+    public int modifyProductInfo(Product product,int id){
+        return productRepository.updateProduct(product.getName(),product.getDescription(),product.getPrice(),id);
+    }
+
 
 }
