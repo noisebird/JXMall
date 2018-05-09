@@ -29,5 +29,14 @@ public class ProductSericeImpl {
         return productRepository.updateProduct(product.getName(),product.getDescription(),product.getPrice(),id);
     }
 
+    public List<Product> findAllProduct(){
+        return productRepository.findAll();
+    }
 
+    public List<Product> findProductByName(String name){
+        return productRepository.findProductByName(name);
+    }
+    public List<Product> findProductByNameAndDim(String name,String description){
+        return productRepository.findByNameAndDescriptionContaining(name,description);
+    }
 }

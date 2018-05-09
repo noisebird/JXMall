@@ -24,6 +24,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("update Product set name=?1,description=?2,price=?3 where id =?4")
     int updateProduct(String name, String description, double price, int id);
 
+    //  根据名字查找商品
+    List<Product> findProductByName(String name);
 
+    //  根据name和description模糊查询
+    List<Product> findByNameAndDescriptionContaining(String name, String description);
 
 }

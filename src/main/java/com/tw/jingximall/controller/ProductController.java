@@ -65,6 +65,18 @@ public class ProductController {
         return new ResponseEntity<Product>(result, HttpStatus.OK);
     }
 
+//     根据name查询，根据name和description模糊查询，以及查询全部
+    @GetMapping
+    public ResponseEntity<?> getProductByName(@RequestParam(required = false) String name,@RequestParam(required = false) String description){
+        List<Product> list=productService.findProductByName(name);
+        System.out.println(description);
+       if(name==null&&description==null){
+           return new ResponseEntity<List<Product>>(productService.findAllProduct(), HttpStatus.OK);
+       }else if(description==null){
+           return new ResponseEntity<List<Product>>(productService.findProductByName(name), HttpStatus.OK);
+       }
+        return new ResponseEntity<List<Product>>(productService.findProductByNameAndDim(name,description), HttpStatus.OK);
+    }
 
 
 

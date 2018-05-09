@@ -62,5 +62,20 @@ public class ProductJPATest {
         assertTrue(productRepository.findProductById(1).getPrice()==1000);
     }
 
+    @Test
+    public void should_find_all_product_will_return_the_list_is_correct() throws Exception {
+        List<Product> list = productRepository.findAll();
+        assertTrue(list.size()==3);
+    }
 
+    @Test
+    public void should_find_product_by_name_will_return_the_correct_resultset() throws Exception {
+        List<Product> products=productRepository.findProductByName("方便面");
+        assertTrue(products.get(0).getPrice()==5.0);
+    }
+    @Test
+    public void should_find_product_by_name_and_dim_description_will_return_the_correct_resultset() throws Exception {
+        List<Product> products=productRepository.findByNameAndDescriptionContaining("方便面","师");
+        assertTrue(products.get(0).getPrice()==5.0);
+    }
 }
