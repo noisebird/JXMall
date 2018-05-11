@@ -1,5 +1,7 @@
 package com.tw.jingximall.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -11,14 +13,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
     private  String name;
-    @Column
     private double price;
-    @Column
     private  String description;
-
-    @OneToOne(fetch=FetchType.EAGER,cascade={CascadeType.ALL},mappedBy = "product")
+    @OneToOne(fetch=FetchType.EAGER,cascade={CascadeType.ALL})
+    @JoinColumn(name="inventoryId")
     private  Inventory inventory;
 
     public Product() {

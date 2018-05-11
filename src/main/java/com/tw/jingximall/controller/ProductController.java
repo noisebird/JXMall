@@ -2,10 +2,8 @@ package com.tw.jingximall.controller;
 
 
 import com.tw.jingximall.entity.Product;
-import com.tw.jingximall.service.ProductSericeImpl;
-import org.apache.catalina.connector.Request;
+import com.tw.jingximall.service.Impl.ProductServiceImpl;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
-import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    ProductSericeImpl productService;
+    ProductServiceImpl productService;
 
 
 //    保存商品
