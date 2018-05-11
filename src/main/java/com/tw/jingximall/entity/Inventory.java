@@ -1,23 +1,25 @@
 package com.tw.jingximall.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 
 /**
  * Created by wangjie on 2018/5/9.
  */
 @Entity
-@Table(name="inventory")
+@Table(name = "inventory")
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private int count=0;
+    private int count = 0;
     @Column
-    private int lockedCount=0;
-
-    @OneToOne(targetEntity = Product.class)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private int lockedCount = 0;
+    @JsonIgnore
+    @OneToOne(mappedBy = "inventory")
     private Product product;
 
     public Inventory() {
@@ -50,5 +52,13 @@ public class Inventory {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
