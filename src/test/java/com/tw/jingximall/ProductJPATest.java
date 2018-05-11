@@ -65,7 +65,7 @@ public class ProductJPATest {
     @Test
     public void should_find_all_product_will_return_the_list_is_correct() throws Exception {
         List<Product> list = productRepository.findAll();
-        assertTrue(list.size()==3);
+        assertTrue(list.size()==5);
     }
 
     @Test

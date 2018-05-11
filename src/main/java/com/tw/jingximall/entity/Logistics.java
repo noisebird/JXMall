@@ -1,6 +1,8 @@
 package com.tw.jingximall.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "logistics")
+@Setter
+@Getter
 public class Logistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,53 +39,5 @@ public class Logistics {
         this.outboundTime = outboundTime;
         this.signedTime = signedTime;
         this.deliveryMan = deliveryMan;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLogisticsStatus() {
-        return logisticsStatus;
-    }
-
-    public void setLogisticsStatus(String logisticsStatus) {
-        this.logisticsStatus = logisticsStatus;
-    }
-
-    public String getOutboundTime() {
-        return outboundTime;
-    }
-
-    public void setOutboundTime(String outboundTime) {
-        this.outboundTime = outboundTime;
-    }
-
-    public String getSignedTime() {
-        return signedTime;
-    }
-
-    public void setSignedTime(String signedTime) {
-        this.signedTime = signedTime;
-    }
-
-    public String getDeliveryMan() {
-        return deliveryMan;
-    }
-
-    public void setDeliveryMan(String deliveryMan) {
-        this.deliveryMan = deliveryMan;
-    }
-
-    public OrderInfo getOrderInfo() {
-        return orderInfo;
-    }
-
-    public void setOrderInfo(OrderInfo orderInfo) {
-        this.orderInfo = orderInfo;
     }
 }

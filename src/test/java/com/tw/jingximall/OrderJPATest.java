@@ -59,12 +59,12 @@ public class OrderJPATest {
     @Test
     public void should_find_order_by_id_will_success() throws Exception {
         OrderInfo order1=orderRepository.findById(1);
-        assertTrue(order1.getStatus().equals("unpaid"));
+        assertTrue(order1.getStatus().equals("finished"));
     }
     @Test
     public void should_find_order_by_userid_will_success() throws Exception {
         List<OrderInfo> order1=orderRepository.findByUserId(1);
-        assertTrue(order1.get(0).getStatus().equals("unpaid"));
+        assertTrue(order1.get(0).getStatus().equals("finished"));
     }
     @Test
     public void should_modify_order_status_by_paid_will_success() throws Exception {

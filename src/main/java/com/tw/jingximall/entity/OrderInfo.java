@@ -17,6 +17,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="orderInfo")
+@Getter
+@Setter
 public class OrderInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,77 +57,5 @@ public class OrderInfo {
             this.purchaseItemList.add(productShoot);
         }
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(String finishTime) {
-        this.finishTime = finishTime;
-    }
-
-    public String getPaidTime() {
-        return paidTime;
-    }
-
-    public void setPaidTime(String paidTime) {
-        this.paidTime = paidTime;
-    }
-
-    public String getWithdrawnTime() {
-        return withdrawnTime;
-    }
-
-    public void setWithdrawnTime(String withdrawnTime) {
-        this.withdrawnTime = withdrawnTime;
-    }
-
-    public List<ProductShoot> getPurchaseItemList() {
-        return purchaseItemList;
-    }
-
-    public void setPurchaseItemList(List<ProductShoot> purchaseItemList) {
-        this.purchaseItemList = purchaseItemList;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }

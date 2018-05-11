@@ -2,6 +2,8 @@ package com.tw.jingximall.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "inventory")
+@Setter
+@Getter
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,35 +34,4 @@ public class Inventory {
         this.lockedCount = lockedCount;
     }
 
-    public int getLockedCount() {
-        return lockedCount;
-    }
-
-    public void setLockedCount(int lockedCount) {
-        this.lockedCount = lockedCount;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 }
