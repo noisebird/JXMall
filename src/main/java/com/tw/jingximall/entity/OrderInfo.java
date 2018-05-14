@@ -35,7 +35,7 @@ public class OrderInfo {
     @JsonIgnore
     @OneToOne(mappedBy = "orderInfo")
     private Logistics logistics;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "orderInfo")
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "orderInfo")
     private List<ProductShoot> purchaseItemList =new ArrayList<ProductShoot>();
 
     public OrderInfo() {
