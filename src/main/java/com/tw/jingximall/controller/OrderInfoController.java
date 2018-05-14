@@ -4,6 +4,7 @@ import com.tw.jingximall.entity.Logistics;
 import com.tw.jingximall.entity.OrderInfo;
 import com.tw.jingximall.entity.Product;
 import com.tw.jingximall.entity.ProductShoot;
+import com.tw.jingximall.exception.IdNotFoundException;
 import com.tw.jingximall.service.Impl.InventoryServiceImpl;
 import com.tw.jingximall.service.Impl.OrderInfoServiceImpl;
 import com.tw.jingximall.service.Impl.ProductServiceImpl;
@@ -60,7 +61,7 @@ public class OrderInfoController {
     public ResponseEntity<?> getOrderById(@PathVariable int id) {
         OrderInfo orderInfo = orderInfoService.findOrderInfoById(id);
         if (orderInfo == null) {
-            return new ResponseEntity<String>("input id is not exit!", HttpStatus.NOT_FOUND);
+             throw new IdNotFoundException(id);
         }
         return new ResponseEntity<OrderInfo>(orderInfo, HttpStatus.OK);
     }
@@ -77,7 +78,7 @@ public class OrderInfoController {
     public ResponseEntity<?> changeOrderStatus(@PathVariable int id, @RequestParam String orderStatus) {
         OrderInfo orderInfo = orderInfoService.findOrderInfoById(id);
         if (orderInfo == null) {
-            return new ResponseEntity<String>("input id is not exit!", HttpStatus.NOT_FOUND);
+            throw new IdNotFoundException(id);
         }
         //支付订单会生成快递单
         if (orderStatus.equals("paid")) {

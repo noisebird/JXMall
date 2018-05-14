@@ -3,6 +3,7 @@ package com.tw.jingximall.controller;
 import com.tw.jingximall.entity.Logistics;
 import com.tw.jingximall.entity.Product;
 import com.tw.jingximall.entity.ProductShoot;
+import com.tw.jingximall.exception.IdNotFoundException;
 import com.tw.jingximall.service.Impl.InventoryServiceImpl;
 import com.tw.jingximall.service.Impl.LogisticsServiceImpl;
 import com.tw.jingximall.service.Impl.ProductServiceImpl;
@@ -31,7 +32,7 @@ public class LogisticsController {
     public ResponseEntity<?> findLogisticsById(@PathVariable int id) {
         Logistics logistics = logisticsService.findLogisticsDetailById(id);
         if(logistics==null){
-            return new ResponseEntity("id is not exist!", HttpStatus.NOT_FOUND);
+            throw new IdNotFoundException(id);
         }
         return new ResponseEntity<Logistics>(logistics, HttpStatus.OK);
     }

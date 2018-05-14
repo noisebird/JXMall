@@ -1,6 +1,7 @@
 package com.tw.jingximall.controller;
 
 import com.tw.jingximall.entity.Inventory;
+import com.tw.jingximall.exception.IdNotFoundException;
 import com.tw.jingximall.service.Impl.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,15 +18,11 @@ public class InventoryController {
     InventoryServiceImpl inventoryService;
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateActualCount(@PathVariable int id, @RequestBody Inventory inventory){
-        int rows=inventoryService.modifyActualCount(inventory.getCount(),id);
-        if(rows==1){
-            return new ResponseEntity<Inventory>( HttpStatus.NO_CONTENT);
-        }else{
-            return new ResponseEntity<Inventory>( HttpStatus.NOT_MODIFIED);
+    public ResponseEntity<?> updateActualCount(@PathVariable int id, @RequestBody Inventory inventory) {
+        int rows = inventoryService.modifyActualCount(inventory.getCount(), id);
+        if (rows != 1) {
+            throw new IdNotFoundException(id);
         }
-
+        return new ResponseEntity<Inventory>(HttpStatus.NO_CONTENT);
     }
-
-
 }

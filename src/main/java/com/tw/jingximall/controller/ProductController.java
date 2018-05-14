@@ -2,6 +2,7 @@ package com.tw.jingximall.controller;
 
 
 import com.tw.jingximall.entity.Product;
+import com.tw.jingximall.exception.IdNotFoundException;
 import com.tw.jingximall.service.Impl.ProductServiceImpl;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class ProductController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable int id,@RequestBody Product product){
         if(productService.findProductById(id)==null){
-            return new ResponseEntity<String>("id is not exist!",HttpStatus.NOT_FOUND);
+            throw new IdNotFoundException(id);
         }
         if(productService.modifyProductInfo(product,id)==0){
             return new ResponseEntity<String>("update product failure", HttpStatus.NOT_MODIFIED);
@@ -58,7 +59,7 @@ public class ProductController {
     public  ResponseEntity<?> getProductById(@PathVariable int id){
         Product result=productService.findProductById(id);
         if(productService.findProductById(id)==null){
-            return new ResponseEntity<String>("id is not exist!",HttpStatus.NOT_FOUND);
+            throw new IdNotFoundException(id);
         }
         return new ResponseEntity<Product>(result, HttpStatus.OK);
     }
@@ -67,7 +68,6 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<?> getProductByName(@RequestParam(required = false) String name,@RequestParam(required = false) String description){
         List<Product> list=productService.findProductByName(name);
-        System.out.println(description);
        if(name==null&&description==null){
            return new ResponseEntity<List<Product>>(productService.findAllProduct(), HttpStatus.OK);
        }else if(description==null){
