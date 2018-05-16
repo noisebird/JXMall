@@ -9,6 +9,7 @@ import com.tw.jingximall.service.Impl.InventoryServiceImpl;
 import com.tw.jingximall.service.Impl.OrderInfoServiceImpl;
 import com.tw.jingximall.service.Impl.ProductServiceImpl;
 import com.tw.jingximall.service.LogisticsService;
+import com.tw.jingximall.util.Tools;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,27 +34,16 @@ public class OrderInfoController {
     @Autowired
     ProductServiceImpl productService;
     @Autowired
-    InventoryServiceImpl inventoryService;
-    @Autowired
     LogisticsService logisticsService;
 
     //创建订单
     @PostMapping
     public ResponseEntity<?> createOrder(HttpServletRequest request, @RequestBody List<ProductShoot> productShoots) {
-        List<ProductShoot> list = getProductShoots(productShoots);
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.addOrderItem(list);
-        orderInfo.setCreateTime(getDateString());
-        orderInfo.setStatus("unpaid");
-        orderInfo.setTotalPrice(calculateTotalPrice(productShoots));
-        OrderInfo orderInfo1 = orderInfoService.addOrder(orderInfo);
-        if (orderInfo != null) {
-            lockInventory(productShoots, true);
+        OrderInfo producedOrderInfo = orderInfoService.addOrder(productShoots);
+        if (producedOrderInfo != null) {
+            orderInfoService.lockInventory(productShoots, true);
         }
-        URI url = URI.create(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getRequestURI() + "/" + orderInfo1.getId());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(url);
-        return new ResponseEntity<OrderInfo>(orderInfo1, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<OrderInfo>(producedOrderInfo, Tools.getHttpHeader(request,producedOrderInfo), HttpStatus.CREATED);
     }
 
     //根据id查找订单
@@ -87,51 +77,11 @@ public class OrderInfoController {
             return new ResponseEntity<OrderInfo>(HttpStatus.NO_CONTENT);
         } else if (orderStatus.equals("withdrawn")) {
             orderInfoService.withDrawnOrder(id);
-            lockInventory(orderInfo.getPurchaseItemList(), false);
+            orderInfoService.lockInventory(orderInfo.getPurchaseItemList(), false);
             return new ResponseEntity<OrderInfo>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<String>("input param is not correct!", HttpStatus.BAD_REQUEST);
     }
 
-    private List<ProductShoot> getProductShoots(List<ProductShoot> productShoots) {
-        List<ProductShoot> list = new ArrayList<ProductShoot>();
-        for (ProductShoot shoot : productShoots) {
-            int id = shoot.getProductId();
-            Product product = productService.findProductById(id);
-            shoot.setProductName(product.getName());
-            shoot.setProductDescription(product.getDescription());
-            shoot.setPurchasePrice(product.getPrice());
-            shoot.setPurchaseCount(shoot.getPurchaseCount());
-            list.add(shoot);
-        }
-        return list;
-    }
 
-    private void lockInventory(List<ProductShoot> productShoots, boolean flag) {
-        for (ProductShoot shoot : productShoots) {
-            int id = shoot.getProductId();
-            if (flag) {
-                inventoryService.modifyLockedCount(shoot.getPurchaseCount(), id);
-            } else {
-                inventoryService.modifyLockedCount(-(shoot.getPurchaseCount()), id);
-            }
-
-        }
-
-    }
-
-    private double calculateTotalPrice(List<ProductShoot> productShoots) {
-        double totalPrice = 0;
-        for (ProductShoot shoot : productShoots) {
-            int id = shoot.getProductId();
-            Product product = productService.findProductById(id);
-            totalPrice += product.getPrice() * shoot.getPurchaseCount();
-
-        }
-        return totalPrice;
-    }
-
-    private String getDateString() {
-        return new Date(System.currentTimeMillis()).toString();
-    }
 }

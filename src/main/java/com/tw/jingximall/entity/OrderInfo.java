@@ -41,7 +41,13 @@ public class OrderInfo {
     public OrderInfo() {
     }
 
-    public OrderInfo(double totalPrice, String status, String createTime, String finishTime, String paidTime, String withdrawnTime,int userId) {
+    public OrderInfo(String createTime, String status, double totalPrice) {
+        this.createTime = createTime;
+        this.status = status;
+        this.totalPrice = totalPrice;
+    }
+
+    public OrderInfo(double totalPrice, String status, String createTime, String finishTime, String paidTime, String withdrawnTime, int userId) {
         this.totalPrice = totalPrice;
         this.status = status;
         this.createTime = createTime;

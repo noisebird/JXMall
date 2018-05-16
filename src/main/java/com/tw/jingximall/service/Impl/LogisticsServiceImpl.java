@@ -3,6 +3,7 @@ package com.tw.jingximall.service.Impl;
 import com.tw.jingximall.entity.Logistics;
 import com.tw.jingximall.repository.LogisticsRepository;
 import com.tw.jingximall.service.LogisticsService;
+import com.tw.jingximall.util.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +29,12 @@ public class LogisticsServiceImpl implements LogisticsService {
 
     @Override
     public int shipProduct(int id) {
-        return logisticsRepository.updateLogisticsStatus(getDateString(), id);
+        return logisticsRepository.updateLogisticsStatus(Tools.getDateString(), id);
     }
 
     @Override
     public int signProduct(int id) {
-        return logisticsRepository.updateLogisticsStatus(getDateString(), id);
+        return logisticsRepository.updateLogisticsStatus(Tools.getDateString(), id);
     }
 
-    private String getDateString() {
-        return new Date(System.currentTimeMillis()).toString();
-    }
 }

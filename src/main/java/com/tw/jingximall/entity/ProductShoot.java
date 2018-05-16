@@ -26,6 +26,13 @@ public class ProductShoot {
     public ProductShoot() {
     }
 
+    public ProductShoot(String productName, String productDescription, double purchasePrice, int purchaseCount) {
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.purchaseCount = purchaseCount;
+        this.purchasePrice = purchasePrice;
+    }
+
     public ProductShoot(String productDescription, String productName, int purchaseCount, double purchasePrice, int productId) {
         this.productDescription = productDescription;
         this.productName = productName;

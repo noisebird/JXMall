@@ -1,6 +1,7 @@
 package com.tw.jingximall.service;
 
 import com.tw.jingximall.entity.OrderInfo;
+import com.tw.jingximall.entity.ProductShoot;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface OrderInfoService {
     int paidOrder(int id);
 
     //添加订单接口
-    OrderInfo addOrder(OrderInfo orderInfo);
+    OrderInfo addOrder(List<ProductShoot> productShoots);
 }
