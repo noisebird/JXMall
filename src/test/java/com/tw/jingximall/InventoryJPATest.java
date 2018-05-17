@@ -65,7 +65,7 @@ public class InventoryJPATest {
         int rows=inventoryRepository.updateLockedInventory(20,1);
         Inventory inventory=inventoryRepository.findById(1);
         assertTrue(rows==1);
-        assertTrue(inventory.getCount()==127);
+        assertTrue(inventory.getLockedCount()==127);
     }
     @Test
     public void should_update_locked_inventory_will_return_effect_rows() throws Exception {
