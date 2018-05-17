@@ -11,8 +11,8 @@ import java.sql.Date;
  * Created by wangjie on 2018/5/16.
  */
 public class Tools {
-    public static HttpHeaders getHttpHeader(HttpServletRequest request, OrderInfo orderInfo){
-        URI url = URI.create(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getRequestURI() + "/" + orderInfo.getId());
+    public static HttpHeaders getHttpHeader(HttpServletRequest request,int id){
+        URI url = URI.create(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getRequestURI() + "/" + id);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(url);
         return httpHeaders;

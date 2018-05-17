@@ -22,6 +22,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by wangjie on 2018/5/10.
  */
@@ -33,6 +34,7 @@ public class OrderInfoController {
     OrderInfoServiceImpl orderInfoService;
     @Autowired
     ProductServiceImpl productService;
+
     @Autowired
     LogisticsService logisticsService;
 
@@ -43,7 +45,7 @@ public class OrderInfoController {
         if (producedOrderInfo != null) {
             orderInfoService.lockInventory(productShoots, true);
         }
-        return new ResponseEntity<OrderInfo>(producedOrderInfo, Tools.getHttpHeader(request,producedOrderInfo), HttpStatus.CREATED);
+        return new ResponseEntity<OrderInfo>(producedOrderInfo, Tools.getHttpHeader(request,producedOrderInfo.getId()), HttpStatus.CREATED);
     }
 
     //根据id查找订单

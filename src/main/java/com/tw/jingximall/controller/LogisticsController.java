@@ -31,34 +31,38 @@ public class LogisticsController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findLogisticsById(@PathVariable int id) {
         Logistics logistics = logisticsService.findLogisticsDetailById(id);
-        if(logistics==null){
+        if (logistics == null) {
             throw new IdNotFoundException(id);
         }
         return new ResponseEntity<Logistics>(logistics, HttpStatus.OK);
     }
 
+    //改变物流的状态
     @PutMapping("/{id}/orders/{orderId}")
     public ResponseEntity<?> changeLogisticsStatus(@PathVariable int id, @PathVariable int orderId, @RequestParam String logisticsStatus) {
 
-        if(logisticsStatus.equals("shipping")){
+        if (logisticsService.findLogisticsDetailById(id) == null) {
+            throw new IdNotFoundException(id);
+        }
+        if (logisticsStatus.equals("shipping")) {
             int rows = logisticsService.shipProduct(id);
             return new ResponseEntity<Logistics>(HttpStatus.NO_CONTENT);
-        }else if(logisticsStatus.equals("signed")){
+        } else if (logisticsStatus.equals("signed")) {
             int rows = logisticsService.signProduct(id);
-            Logistics logistics=logisticsService.findLogisticsDetailById(id);
+            Logistics logistics = logisticsService.findLogisticsDetailById(id);
             reduceInventoryCount(logistics.getOrderInfo().getPurchaseItemList());
             return new ResponseEntity<Logistics>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<String>("input param is not validate",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("input param is not validate", HttpStatus.BAD_REQUEST);
     }
 
-    private void reduceInventoryCount(List<ProductShoot> list){
-        for(ProductShoot productShoot:list){
-            int id=productShoot.getProductId();
-            int counts=productShoot.getPurchaseCount();
-            Product product=productService.findProductById(id);
-            int inventoryId=product.getInventory().getId();
-            inventoryService.modifyActualCount(-(counts),inventoryId);
+    private void reduceInventoryCount(List<ProductShoot> list) {
+        for (ProductShoot productShoot : list) {
+            int id = productShoot.getProductId();
+            int counts = productShoot.getPurchaseCount();
+            Product product = productService.findProductById(id);
+            int inventoryId = product.getInventory().getId();
+            inventoryService.modifyActualCount(-(counts), inventoryId);
         }
 
     }

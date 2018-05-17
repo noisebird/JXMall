@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class IdNotFoundException extends RuntimeException {
     public IdNotFoundException(int id) {
-        super("Id: "+id+"is not found!");
+        super("Id: "+id+" is not found!");
     }
 }
